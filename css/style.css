@@ -1,0 +1,291 @@
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 全局基础样式 */
+body {
+    font-family: "Microsoft YaHei", sans-serif;
+    line-height: 1.6;
+    min-height: 100vh; /* 确保页面至少占满整个视口高度 */
+    display: flex;
+    flex-direction: column; /* 使用弹性布局使footer始终位于底部 */
+}
+
+/* 通用容器样式 */
+.header-container,
+.content-container,
+.footer-container {
+    max-width: 1200px; /* 最大宽度限制 */
+    margin: 0 auto; /* 居中对齐 */
+    padding: 0 20px; /* 左右内边距，确保内容不贴边 */
+    width: 100%; /* 自适应宽度 */
+}
+
+/* 顶部区域样式 */
+.header {
+    background-color: #2c3e50; /* 改为深色背景 */
+    padding: 40px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 稍微加深阴影 */
+}
+
+.header h1 {
+    color: #fff; /* 改为白色字体 */
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2.5em;
+}
+
+/* 导航菜单样式 */
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* 从20px增加到30px，使菜单项之间间距更大 */
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #e0e0e0; /* 导航链接也改为浅色 */
+    padding: 8px 15px;
+    transition: color 0.3s;
+    font-size: 1.1em;
+}
+
+.main-nav a:hover {
+    color: #fff; /* 悬停时变为纯白色 */
+}
+
+/* 主要内容区域样式 */
+.main-content {
+    flex: 1; /* 占用剩余空间 */
+    padding: 40px 0;
+    background-color: #fff;
+    position: relative; /* 添加相对定位，作为蒙版的参考 */
+    background: url('../images/bg_01.jpg') no-repeat center center;
+    background-size: cover; /* 图片自适应覆盖 */
+}
+
+/* 添加蒙版层 */
+.main-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8); /* 白色半透明蒙版 */
+    z-index: 1; /* 确保蒙版在背景图片之上 */
+}
+
+/* 确保内容在蒙版之上 */
+.content-container {
+    position: relative;
+    z-index: 2; /* 确保内容显示在蒙版之上 */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.content-section {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 底部区域样式 */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.footer a:hover {
+    opacity: 0.8;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 24px;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.beian-info {
+    line-height: 1.6;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;  /* 控制备案号之间的间距 */
+}
+
+.police-beian {
+    display: inline-flex;
+    align-items: center;
+}
+
+.police-beian img {
+    height: 1.1em;  /* 稍微调小图标高度 */
+    width: auto;    /* 保持图标比例 */
+    margin: 0 3px;  /* 调整图标两侧间距 */
+    vertical-align: middle;
+}
+
+.beian-info a {
+    display: inline-flex;
+    align-items: center;
+    height: 1.6em;  /* 确保所有链接高度一致 */
+}
+
+/* 菜单按钮样式 */
+.menu-toggle {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    cursor: pointer;
+    z-index: 100;
+    padding: 10px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #1a2634;
+    z-index: 99;
+    transition: 0.3s;
+    padding-top: 80px;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.side-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.side-nav li {
+    padding: 15px 25px;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin: 5px 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.side-nav li:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05); /* 移除横向位移 */
+}
+
+.side-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    display: block;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.side-nav li:hover a {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+/* 添加激活状态样式 */
+.side-nav li.active-menu-item {
+    background-color: #3498db;
+}
+
+.side-nav li.active-menu-item a {
+    color: white;
+}
+
+/* 当菜单打开时的汉堡按钮动画 */
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* 调整header容器定位 */
+.header-container {
+    position: relative;
+}
+
+/* 文章卡片样式 */
+.post-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* 相册网格布局 */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* 关于作者样式 */
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 20px;
+} 
