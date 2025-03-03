@@ -26,11 +26,23 @@ body {
 
 /* 顶部区域样式 */
 .header {
-    background-color: #2c3e50; /* 改为深色背景 */
+    height: 150px;
+    background-image: url('../images/background001.png'); /* 改为深色背景 */
+    background-size: 1920px 150px;
     padding: 40px 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 稍微加深阴影 */
 }
-
+.logo-machina {
+    top: 30px;
+    width: 400x;
+    height: 100px;
+    position: fixed;
+    left: 30px;
+    transition: left 0.3s ease; /* 添加过渡效果 */
+}
+.logo-machina.active {
+    left: 270px; /* 原来位置 + 200px */
+}
 .header h1 {
     color: #fff; /* 改为白色字体 */
     text-align: center;
@@ -161,33 +173,80 @@ body {
     height: 1.6em;  /* 确保所有链接高度一致 */
 }
 
-/* 菜单按钮样式 */
+/* 菜单按钮样式 - 优化后的汉堡按钮设计 */
+/* 菜单按钮的基础样式 */
 .menu-toggle {
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    cursor: pointer;
-    z-index: 100;
-    padding: 10px;
+    position: fixed;      /* 固定定位，不随页面滚动而移动 */
+    left: 20px;          /* 距离左边20px */
+    top: 50px;           /* 距离顶部50px */
+    cursor: pointer;      /* 鼠标悬停时显示手型光标 */
+    z-index: 100;        /* 确保按钮在其他元素之上 */
+    padding: 5px;        /* 增加内边距使点击区域更大 */
+    transition: all 0.3s ease;  /* 所有属性变化时添加过渡效果 */
+    background-color: transparent;  /* 背景透明 */
+    border-radius: 5px;   /* 添加圆角效果 */
 }
 
+/* 菜单按钮激活状态的样式 */
+.menu-toggle.active {
+    position: fixed;
+    left: 100px;         /* 当菜单打开时，按钮向右移动到侧边栏旁边 */
+    top: 50px;
+    background-color: transparent;
+}
+
+/* 移动端菜单按钮的响应式布局 */
+@media (max-width: 768px) {
+    .menu-toggle.active {
+        left: 210px;     /* 在移动端时，保持与PC端一致的位置 */
+    }
+}
+
+/* 移动端的特殊处理 */
+@media (max-width: 768px) {
+    .menu-toggle.active {
+        left: 125px;     /* 调整移动端时的左侧位置 */
+        transform: translateX(-50%);  /* 使用变换实现水平居中 */
+    }
+}
+
+/* 菜单按钮中的横线基础样式 */
 .menu-toggle span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #fff;
-    margin: 5px 0;
-    transition: 0.3s;
+    display: block;       /* 设置为块级元素 */
+    width: 50px;         /* 横线宽度 */
+    height: 6px;         /* 横线高度 */
+    background-color: #fff;  /* 横线颜色为白色 */
+    margin: 6px 0;       /* 横线之间的间距 */
+    transition: all 0.3s ease;  /* 添加过渡效果 */
+    border-radius: 4px;  /* 横线的圆角效果 */
+}
+
+/* 菜单打开时的动画效果 - 第一条横线 */
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(0px, 12px);  /* 旋转并移动形成交叉效果 */
+}
+
+/* 菜单打开时的动画效果 - 第二条横线 */
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;          /* 中间横线隐藏 */
+    transform: translateX(-20px);  /* 向左移动渐隐效果 */
+}
+
+/* 菜单打开时的动画效果 - 第三条横线 */
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(0px, -12px);  /* 旋转并移动形成交叉效果 */
 }
 
 /* 侧边栏样式 */
 .sidebar {
-    position: fixed;
+    position: fixed;/*固定定位*/
     left: -250px;
     top: 0;
     width: 250px;
     height: 100vh;
-    background-color: #1a2634;
+    background-image: url('../images/background-menu.png');
+    background-size: 250px 960px;
+    background-repeat: repeat-y;
     z-index: 99;
     transition: 0.3s;
     padding-top: 80px;
@@ -240,19 +299,6 @@ body {
     color: white;
 }
 
-/* 当菜单打开时的汉堡按钮动画 */
-.menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 6px);
-}
-
-.menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -6px);
-}
-
 /* 调整header容器定位 */
 .header-container {
     position: relative;
@@ -288,4 +334,11 @@ body {
     border-radius: 50%;
     float: left;
     margin-right: 20px;
-} 
+}
+
+/* 确保菜单按钮不会遮挡菜单项 */
+.side-nav {
+    margin-top: 60px;  /* 为菜单按钮留出空间 */
+    position: relative;
+    z-index: 98;       /* 确保在菜单按钮下方 */
+}

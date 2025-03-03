@@ -38,10 +38,12 @@ function addScrollEffect() {
 function initializeSidebar() {
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
+    const logoMachina = document.querySelector('.logo-machina');
     
     menuToggle.addEventListener('click', function() {
         menuToggle.classList.toggle('active');
         sidebar.classList.toggle('active');
+        logoMachina.classList.toggle('active');// 点击菜单时，logoMachina也添加active类
     });
 
     // 点击页面其他地方关闭菜单
@@ -49,6 +51,7 @@ function initializeSidebar() {
         if (!sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('active')) {
             menuToggle.classList.remove('active');
             sidebar.classList.remove('active');
+            logoMachina.classList.remove('active');
         }
     });
 }
@@ -57,6 +60,7 @@ function setupPageNavigation() {
     // 页面切换逻辑
     const links = document.querySelectorAll('.side-nav a');
     const sections = document.querySelectorAll('.content-section');
+    const logoMachina = document.querySelector('.logo-machina');  // 获取 logo 元素
     
     links.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -74,6 +78,7 @@ function setupPageNavigation() {
             // 关闭菜单
             document.getElementById('menuToggle').classList.remove('active');
             document.getElementById('sidebar').classList.remove('active');
+            logoMachina.classList.remove('active');  // 同时移除 logo 的 active 类
         });
     });
 } 
