@@ -36,7 +36,7 @@ body {
     top: 30px;
     width: 400x;
     height: 100px;
-    position: fixed;
+    position: absolute;
     left: 30px;
     transition: left 0.3s ease; /* 添加过渡效果 */
 }
@@ -48,26 +48,6 @@ body {
     text-align: center;
     margin-bottom: 25px;
     font-size: 2.5em;
-}
-
-/* 导航菜单样式 */
-.main-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 30px; /* 从20px增加到30px，使菜单项之间间距更大 */
-}
-
-.main-nav a {
-    text-decoration: none;
-    color: #e0e0e0; /* 导航链接也改为浅色 */
-    padding: 8px 15px;
-    transition: color 0.3s;
-    font-size: 1.1em;
-}
-
-.main-nav a:hover {
-    color: #fff; /* 悬停时变为纯白色 */
 }
 
 /* 主要内容区域样式 */
@@ -138,11 +118,6 @@ body {
 @media (max-width: 768px) {
     .header h1 {
         font-size: 24px;
-    }
-    
-    .main-nav ul {
-        flex-direction: column;
-        align-items: center;
     }
 }
 
@@ -223,6 +198,7 @@ body {
 
 /* 菜单打开时的动画效果 - 第一条横线 */
 .menu-toggle.active span:nth-child(1) {
+    background-color: #8f6814;
     transform: rotate(45deg) translate(0px, 12px);  /* 旋转并移动形成交叉效果 */
 }
 
@@ -234,6 +210,7 @@ body {
 
 /* 菜单打开时的动画效果 - 第三条横线 */
 .menu-toggle.active span:nth-child(3) {
+    background-color: #8f6814;
     transform: rotate(-45deg) translate(0px, -12px);  /* 旋转并移动形成交叉效果 */
 }
 
@@ -255,7 +232,17 @@ body {
 .sidebar.active {
     left: 0;
 }
-
+.ellie-img-001 {
+    position: absolute;
+    left: 20px;
+    top: 50px;
+    background-image: url('../images/Ellie-001.png');
+    background-size: 250px 960px;
+    background-repeat: repeat-y;
+    z-index: 100;
+    transition: 0.3s;
+    padding-top: 80px;
+}
 .side-nav ul {
     list-style: none;
     padding: 0;
@@ -276,7 +263,7 @@ body {
 }
 
 .side-nav a {
-    color: #fff;
+    color: #8f6814; /* 修改为深黄色 */
     text-decoration: none;
     font-size: 1.1em;
     display: block;
@@ -288,15 +275,6 @@ body {
 .side-nav li:hover a {
     color: #2c3e50;
     font-weight: 500;
-}
-
-/* 添加激活状态样式 */
-.side-nav li.active-menu-item {
-    background-color: #3498db;
-}
-
-.side-nav li.active-menu-item a {
-    color: white;
 }
 
 /* 调整header容器定位 */
