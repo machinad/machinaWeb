@@ -1,66 +1,69 @@
-/* 全局样式重置 */
+/* ========== 全局样式 ========== */
+/* 重置样式 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* 全局基础样式 */
+/* 基础样式 */
 body {
     font-family: "Microsoft YaHei", sans-serif;
     line-height: 1.6;
-    min-height: 100vh; /* 确保页面至少占满整个视口高度 */
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; /* 使用弹性布局使footer始终位于底部 */
+    flex-direction: column;
 }
 
-/* 通用容器样式 */
+/* ========== 布局容器 ========== */
 .header-container,
 .content-container,
 .footer-container {
-    max-width: 1200px; /* 最大宽度限制 */
-    margin: 0 auto; /* 居中对齐 */
-    padding: 0 20px; /* 左右内边距，确保内容不贴边 */
-    width: 100%; /* 自适应宽度 */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
 }
 
-/* 顶部区域样式 */
+/* ========== 顶部区域 ========== */
 .header {
     height: 150px;
-    background-image: url('../images/background001.png'); /* 改为深色背景 */
+    background-image: url('../images/background001.png');
     background-size: 1920px 150px;
     padding: 40px 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 稍微加深阴影 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-.logo-machina {
-    top: 30px;
-    width: 400x;
-    height: 100px;
-    position: absolute;
-    left: 30px;
-    transition: left 0.3s ease; /* 添加过渡效果 */
-}
-.logo-machina.active {
-    left: 270px; /* 原来位置 + 200px */
-}
+
 .header h1 {
-    color: #fff; /* 改为白色字体 */
+    color: #fff;
     text-align: center;
     margin-bottom: 25px;
     font-size: 2.5em;
 }
 
-/* 主要内容区域样式 */
-.main-content {
-    flex: 1; /* 占用剩余空间 */
-    padding: 40px 0;
-    background-color: #fff;
-    position: relative; /* 添加相对定位，作为蒙版的参考 */
-    background: url('../images/bg_01.jpg') no-repeat center center;
-    background-size: cover; /* 图片自适应覆盖 */
+.logo-machina {
+    top: 30px;
+    width: 450px;
+    height: 100px;
+    position: absolute;
+    left: 30px;
+    transition: left 0.3s ease;
 }
 
-/* 添加蒙版层 */
+.logo-machina.active {
+    left: 270px;
+}
+
+/* ========== 主要内容区域 ========== */
+.main-content {
+    flex: 1;
+    padding: 40px 0;
+    background: url('../images/bg_01.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+}
+
+/* 内容区域蒙版 */
 .main-content::before {
     content: '';
     position: absolute;
@@ -68,20 +71,16 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.8); /* 白色半透明蒙版 */
-    z-index: 1; /* 确保蒙版在背景图片之上 */
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1;
 }
 
-/* 确保内容在蒙版之上 */
 .content-container {
     position: relative;
-    z-index: 2; /* 确保内容显示在蒙版之上 */
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    width: 100%;
+    z-index: 2;
 }
 
+/* 内容切换动画 */
 .content-section {
     display: none;
     animation: fadeIn 0.5s ease;
@@ -96,7 +95,169 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 底部区域样式 */
+/* ========== 侧边栏导航 ========== */
+/* 菜单按钮 */
+.menu-toggle {
+    position: fixed;
+    left: 20px;
+    top: 50px;
+    cursor: pointer;
+    z-index: 100;
+    padding: 5px;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    border-radius: 5px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 50px;
+    height: 6px;
+    background-color: #fff;
+    margin: 6px 0;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+/* 菜单按钮激活状态 */
+.menu-toggle.active {
+    left: 100px;
+    top: 50px;
+    background-color: transparent;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    background-color: #8f6814;
+    transform: rotate(45deg) translate(0px, 12px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.menu-toggle.active span:nth-child(3) {
+    background-color: #8f6814;
+    transform: rotate(-45deg) translate(0px, -12px);
+}
+
+/* 侧边栏主体 */
+.sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background-image: url('../images/background-menu.png');
+    background-size: 250px 960px;
+    background-repeat: repeat-y;
+    z-index: 99;
+    transition: 0.3s;
+    padding-top: 80px;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+/* 装饰图片 */
+.ellie-img-001 {
+    position: absolute;
+    width: 200px;
+    height: 480px;
+    left: -120px;
+    top: 400px;
+    background-image: url('../images/Ellie-001.png');
+    background-size: 200px 480px;
+    background-repeat: no-repeat;
+    z-index: 97;
+    transition: 0.3s;
+    padding-top: 80px;
+}
+
+.ellie-img-001.active {
+    left: 120px;
+}
+
+/* 导航菜单 */
+.side-nav {
+    margin-top: 60px;
+    position: relative;
+    z-index: 98;
+}
+
+.side-nav ul {
+    list-style: none;
+    padding: 0;
+    position: relative;
+    z-index: 99;
+}
+
+.side-nav li {
+    padding: 15px 25px;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin: 5px 15px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 99;
+}
+
+.side-nav li:hover {
+    background-color: #a5700f;
+    transform: scale(1.05);
+}
+
+.side-nav a {
+    color: #8f6814;
+    text-decoration: none;
+    font-size: 1.5em;
+    display: block;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.side-nav li:hover a {
+    color: #fff59e;
+    font-weight: 500;
+}
+
+/* ========== 页面组件 ========== */
+/* 文章卡片 */
+.post-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* 相册网格 */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* 作者头像 */
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 20px;
+}
+
+/* ========== 页脚区域 ========== */
 .footer {
     background-color: #333;
     color: #fff;
@@ -114,20 +275,14 @@ body {
     opacity: 0.8;
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .header h1 {
-        font-size: 24px;
-    }
-}
-
+/* 备案信息 */
 .beian-info {
     line-height: 1.6;
     margin-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;  /* 控制备案号之间的间距 */
+    gap: 5px;
 }
 
 .police-beian {
@@ -136,196 +291,26 @@ body {
 }
 
 .police-beian img {
-    height: 1.1em;  /* 稍微调小图标高度 */
-    width: auto;    /* 保持图标比例 */
-    margin: 0 3px;  /* 调整图标两侧间距 */
+    height: 1.1em;
+    width: auto;
+    margin: 0 3px;
     vertical-align: middle;
 }
 
 .beian-info a {
     display: inline-flex;
     align-items: center;
-    height: 1.6em;  /* 确保所有链接高度一致 */
+    height: 1.6em;
 }
 
-/* 菜单按钮样式 - 优化后的汉堡按钮设计 */
-/* 菜单按钮的基础样式 */
-.menu-toggle {
-    position: fixed;      /* 固定定位，不随页面滚动而移动 */
-    left: 20px;          /* 距离左边20px */
-    top: 50px;           /* 距离顶部50px */
-    cursor: pointer;      /* 鼠标悬停时显示手型光标 */
-    z-index: 100;        /* 确保按钮在其他元素之上 */
-    padding: 5px;        /* 增加内边距使点击区域更大 */
-    transition: all 0.3s ease;  /* 所有属性变化时添加过渡效果 */
-    background-color: transparent;  /* 背景透明 */
-    border-radius: 5px;   /* 添加圆角效果 */
-}
-
-/* 菜单按钮激活状态的样式 */
-.menu-toggle.active {
-    position: fixed;
-    left: 100px;         /* 当菜单打开时，按钮向右移动到侧边栏旁边 */
-    top: 50px;
-    background-color: transparent;
-}
-
-/* 移动端菜单按钮的响应式布局 */
+/* ========== 响应式设计 ========== */
 @media (max-width: 768px) {
-    .menu-toggle.active {
-        left: 210px;     /* 在移动端时，保持与PC端一致的位置 */
+    .header h1 {
+        font-size: 24px;
     }
-}
 
-/* 移动端的特殊处理 */
-@media (max-width: 768px) {
     .menu-toggle.active {
-        left: 125px;     /* 调整移动端时的左侧位置 */
-        transform: translateX(-50%);  /* 使用变换实现水平居中 */
+        left: 125px;
+        transform: translateX(-50%);
     }
-}
-
-/* 菜单按钮中的横线基础样式 */
-.menu-toggle span {
-    display: block;       /* 设置为块级元素 */
-    width: 50px;         /* 横线宽度 */
-    height: 6px;         /* 横线高度 */
-    background-color: #fff;  /* 横线颜色为白色 */
-    margin: 6px 0;       /* 横线之间的间距 */
-    transition: all 0.3s ease;  /* 添加过渡效果 */
-    border-radius: 4px;  /* 横线的圆角效果 */
-}
-
-/* 菜单打开时的动画效果 - 第一条横线 */
-.menu-toggle.active span:nth-child(1) {
-    background-color: #8f6814;
-    transform: rotate(45deg) translate(0px, 12px);  /* 旋转并移动形成交叉效果 */
-}
-
-/* 菜单打开时的动画效果 - 第二条横线 */
-.menu-toggle.active span:nth-child(2) {
-    opacity: 0;          /* 中间横线隐藏 */
-    transform: translateX(-20px);  /* 向左移动渐隐效果 */
-}
-
-/* 菜单打开时的动画效果 - 第三条横线 */
-.menu-toggle.active span:nth-child(3) {
-    background-color: #8f6814;
-    transform: rotate(-45deg) translate(0px, -12px);  /* 旋转并移动形成交叉效果 */
-}
-
-/* 侧边栏样式 */
-.sidebar {
-    position: fixed;/*固定定位*/
-    left: -250px;
-    top: 0;
-    width: 250px;
-    height: 100vh;
-    background-image: url('../images/background-menu.png');
-    background-size: 250px 960px;
-    background-repeat: repeat-y;
-    z-index: 99;
-    transition: 0.3s;
-    padding-top: 80px;
-}
-
-.sidebar.active {
-    left: 0;
-}
-.ellie-img-001 {
-    position: absolute;
-    width: 200px;
-    height: 480px;
-    left: -120px;
-    top: 400px;
-    background-image: url('../images/Ellie-001.png');
-    background-size: 200px 480px;
-    background-repeat: no-repeat;
-    z-index: 97; /* 降低层级，确保在导航栏下面 */
-    transition: 0.3s;
-    padding-top: 80px;
-}
-.ellie-img-001.active {
-    left: 120px;
-}
-.side-nav ul {
-    list-style: none;
-    padding: 0;
-    position: relative; /* 添加相对定位 */
-    z-index: 99; /* 提高层级，确保在图片上面 */
-}
-
-.side-nav li {
-    padding: 15px 25px;
-    transition: all 0.3s ease;
-    border-radius: 6px;
-    margin: 5px 15px;
-    display: flex;
-    justify-content: center;
-    position: relative; /* 添加相对定位 */
-    z-index: 99; /* 确保在图片上面 */
-}
-
-.side-nav li:hover {
-    background-color: #a5700f;
-    transform: scale(1.05); /* 移除横向位移 */
-}
-
-.side-nav a {
-    color: #8f6814; /* 修改为深黄色 */
-    text-decoration: none;
-    font-size: 1.5em;
-    display: block;
-    transition: all 0.3s ease;
-    text-align: center;
-    width: 100%;
-}
-
-.side-nav li:hover a {
-    color: #fff59e;
-    font-weight: 500;
-}
-
-/* 调整header容器定位 */
-.header-container {
-    position: relative;
-}
-
-/* 文章卡片样式 */
-.post-card {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-/* 相册网格布局 */
-.photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.photo-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-/* 关于作者样式 */
-.avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    float: left;
-    margin-right: 20px;
-}
-
-/* 确保菜单按钮不会遮挡菜单项 */
-.side-nav {
-    margin-top: 60px;  /* 为菜单按钮留出空间 */
-    position: relative;
-    z-index: 98;       /* 确保在菜单按钮下方 */
 }
