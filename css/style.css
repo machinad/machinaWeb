@@ -234,18 +234,25 @@ body {
 }
 .ellie-img-001 {
     position: absolute;
-    left: 20px;
-    top: 50px;
+    width: 200px;
+    height: 480px;
+    left: -120px;
+    top: 400px;
     background-image: url('../images/Ellie-001.png');
-    background-size: 250px 960px;
-    background-repeat: repeat-y;
-    z-index: 100;
+    background-size: 200px 480px;
+    background-repeat: no-repeat;
+    z-index: 97; /* 降低层级，确保在导航栏下面 */
     transition: 0.3s;
     padding-top: 80px;
+}
+.ellie-img-001.active {
+    left: 120px;
 }
 .side-nav ul {
     list-style: none;
     padding: 0;
+    position: relative; /* 添加相对定位 */
+    z-index: 99; /* 提高层级，确保在图片上面 */
 }
 
 .side-nav li {
@@ -255,17 +262,19 @@ body {
     margin: 5px 15px;
     display: flex;
     justify-content: center;
+    position: relative; /* 添加相对定位 */
+    z-index: 99; /* 确保在图片上面 */
 }
 
 .side-nav li:hover {
-    background-color: #f0f0f0;
+    background-color: #a5700f;
     transform: scale(1.05); /* 移除横向位移 */
 }
 
 .side-nav a {
     color: #8f6814; /* 修改为深黄色 */
     text-decoration: none;
-    font-size: 1.1em;
+    font-size: 1.5em;
     display: block;
     transition: all 0.3s ease;
     text-align: center;
@@ -273,7 +282,7 @@ body {
 }
 
 .side-nav li:hover a {
-    color: #2c3e50;
+    color: #fff59e;
     font-weight: 500;
 }
 

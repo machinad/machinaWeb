@@ -1,18 +1,24 @@
-// 主要的 JavaScript 代码将放在这里
+// 主要的 JavaScript 代码
 document.addEventListener('DOMContentLoaded', function() {
-    // 初始化函数
     initializeSite();
 });
 
+// 缓存 DOM 元素
+const elements = {
+    header: document.querySelector('.header'),
+    menuToggle: document.getElementById('menuToggle'),
+    sidebar: document.getElementById('sidebar'),
+    logoMachina: document.querySelector('.logo-machina'),
+    ellieImg001: document.querySelector('.ellie-img-001'),
+    links: document.querySelectorAll('.side-nav a'),
+    sections: document.querySelectorAll('.content-section')
+};
+
 /**
  * 网站初始化函数
- * 包含所有需要在页面加载时执行的功能
  */
 function initializeSite() {
-    // 控制台输出加载完成信息
     console.log('网站加载完成');
-    
-    // 添加页面滚动效果
     addScrollEffect();
     initializeSidebar();
     setupPageNavigation();
@@ -20,65 +26,68 @@ function initializeSite() {
 
 /**
  * 添加页面滚动效果
- * 当页面滚动时添加一些视觉效果
  */
 function addScrollEffect() {
     window.addEventListener('scroll', function() {
-        const header = document.querySelector('.header');
-        
         // 当页面滚动超过100px时，给header添加阴影效果
-        if (window.scrollY > 100) {
-            header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-        } else {
-            header.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
-        }
+        elements.header.style.boxShadow = window.scrollY > 100 
+            ? '0 2px 10px rgba(0,0,0,0.1)' 
+            : '0 2px 5px rgba(0,0,0,0.1)';
     });
 }
 
+/**
+ * 切换菜单状态
+ * @param {boolean} isActive - 是否激活
+ */
+function toggleMenuState(isActive) {
+    const action = isActive ? 'add' : 'remove';
+    elements.menuToggle.classList[action]('active');
+    elements.sidebar.classList[action]('active');
+    elements.logoMachina.classList[action]('active');
+    elements.ellieImg001.classList[action]('active');
+}
+
+/**
+ * 初始化侧边栏
+ */
 function initializeSidebar() {
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const logoMachina = document.querySelector('.logo-machina');
-    
-    menuToggle.addEventListener('click', function() {
-        menuToggle.classList.toggle('active');
-        sidebar.classList.toggle('active');
-        logoMachina.classList.toggle('active');// 点击菜单时，logoMachina也添加active类
+    // 点击菜单按钮切换状态
+    elements.menuToggle.addEventListener('click', function() {
+        const isActive = !elements.sidebar.classList.contains('active');
+        toggleMenuState(isActive);
     });
 
     // 点击页面其他地方关闭菜单
     document.addEventListener('click', function(e) {
-        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('active')) {
-            menuToggle.classList.remove('active');
-            sidebar.classList.remove('active');
-            logoMachina.classList.remove('active');
+        if (!elements.sidebar.contains(e.target) && 
+            !elements.menuToggle.contains(e.target) && 
+            elements.sidebar.classList.contains('active')) {
+            toggleMenuState(false);
         }
     });
 }
 
+/**
+ * 切换页面内容
+ * @param {string} targetId - 目标内容区块的ID
+ */
+function switchContent(targetId) {
+    elements.sections.forEach(section => {
+        section.classList.toggle('active', section.id === targetId);
+    });
+}
+
+/**
+ * 设置页面导航
+ */
 function setupPageNavigation() {
-    // 页面切换逻辑
-    const links = document.querySelectorAll('.side-nav a');
-    const sections = document.querySelectorAll('.content-section');
-    const logoMachina = document.querySelector('.logo-machina');  // 获取 logo 元素
-    
-    links.forEach(link => {
+    elements.links.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
-            
-            // 切换激活状态
-            sections.forEach(section => {
-                section.classList.remove('active');
-                if(section.id === targetId) {
-                    section.classList.add('active');
-                }
-            });
-
-            // 关闭菜单
-            document.getElementById('menuToggle').classList.remove('active');
-            document.getElementById('sidebar').classList.remove('active');
-            logoMachina.classList.remove('active');  // 同时移除 logo 的 active 类
+            switchContent(targetId);
+            toggleMenuState(false); // 关闭菜单
         });
     });
 } 
