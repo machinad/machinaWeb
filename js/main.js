@@ -22,6 +22,7 @@ function initializeSite() {
     addScrollEffect();
     initializeSidebar();
     setupPageNavigation();
+    loadArticles(); // 加载文章列表
 }
 
 /**
@@ -81,7 +82,7 @@ function switchContent(targetId) {
 /**
  * 设置页面导航
  */
-function setupPageNavigation() {
+function setupPageNavigation() {// 为每个链接添加点击事件
     elements.links.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -90,4 +91,53 @@ function setupPageNavigation() {
             toggleMenuState(false); // 关闭菜单
         });
     });
-} 
+}
+
+/**
+ * 加载文章列表
+ */
+async function loadArticles() {
+    try {
+        const response = await fetch('https://webapi.91mufeng.top/api/articles');
+        const articles = await response.json();
+        const articleList = document.getElementById('articleList');
+        
+        articleList.innerHTML = articles.map(article => `
+            <article class="post-card" data-id="${article.id}">
+                <h3>${article.title}</h3>
+                <time>${article.date}</time>
+                <p>${article.preview}</p>
+            </article>
+        `).join('');
+
+        // 为每篇文章添加点击事件
+        document.querySelectorAll('.post-card').forEach(card => {
+            card.addEventListener('click', async () => {
+                const articleId = card.dataset.id;
+                await loadArticleContent(articleId);
+            });
+        });
+    } catch (error) {
+        console.error('加载文章列表失败:', error);
+    }
+}
+
+/**
+ * 加载文章内容
+ * @param {string} articleId - 文章ID
+ */
+async function loadArticleContent(articleId) {
+    try {
+        const response = await fetch(`https://webapi.91mufeng.top/api/articles/${articleId}`);
+        const data = await response.json();
+        const articleContent = document.getElementById('articleContent');
+        
+        articleContent.innerHTML = data.content;
+        articleContent.style.display = 'block';
+        
+        // 隐藏文章列表
+        document.getElementById('articleList').style.display = 'none';
+    } catch (error) {
+        console.error('加载文章内容失败:', error);
+    }
+}

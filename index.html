@@ -56,14 +56,15 @@
 
             <!-- 技术文章 -->
             <section id="articles" class="content-section">
-                <h2>技术文章</h2>
-                <div class="article-list">
-                    <article class="post-card">
-                        <h3>前端性能优化实践</h3>
-                        <time>2024-03-15</time>
-                        <p>分享在实际项目中应用的性能优化方案...</p>
-                    </article>
-                    <!-- 更多文章 -->
+                <div class="section-header">
+                    <h2>技术文章</h2>
+                    <a href="edit-article.html" class="btn-new-article">写文章</a>
+                </div>
+                <div class="article-list" id="articleList">
+                    <!-- 文章列表将通过JavaScript动态加载 -->
+                </div>
+                <div id="articleContent" class="article-content" style="display: none;">
+                    <!-- 文章内容将在这里动态显示 -->
                 </div>
             </section>
 
