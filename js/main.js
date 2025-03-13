@@ -87,6 +87,12 @@ function setupPageNavigation() {// 为每个链接添加点击事件
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
+            
+            // 如果当前在文章详情页面，先返回文章列表
+            if (document.getElementById('articleContent').style.display === 'block') {
+                showArticleList();
+            }
+            
             switchContent(targetId);
             toggleMenuState(false); // 关闭菜单
         });
@@ -131,13 +137,49 @@ async function loadArticleContent(articleId) {
         const response = await fetch(`https://webapi.91mufeng.top/api/articles/${articleId}`);
         const data = await response.json();
         const articleContent = document.getElementById('articleContent');
+        const articleList = document.getElementById('articleList');
         
-        articleContent.innerHTML = data.content;
+        articleContent.innerHTML = `
+            <button id="backToList" class="btn-back">返回列表</button>
+            ${data.content}
+        `;
         articleContent.style.display = 'block';
-        
-        // 隐藏文章列表
-        document.getElementById('articleList').style.display = 'none';
+        articleList.style.display = 'none';
+
+        // 添加返回按钮点击事件
+        document.getElementById('backToList').addEventListener('click', showArticleList);
     } catch (error) {
         console.error('加载文章内容失败:', error);
     }
+}
+
+/**
+ * 显示文章列表
+ */
+function showArticleList() {
+    const articleContent = document.getElementById('articleContent');
+    const articleList = document.getElementById('articleList');
+    
+    articleContent.style.display = 'none';
+    articleList.style.display = 'block';
+}
+
+/**
+ * 设置页面导航
+ */
+function setupPageNavigation() {
+    elements.links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            
+            // 如果当前在文章详情页面，先返回文章列表
+            if (document.getElementById('articleContent').style.display === 'block') {
+                showArticleList();
+            }
+            
+            switchContent(targetId);
+            toggleMenuState(false); // 关闭菜单
+        });
+    });
 }
