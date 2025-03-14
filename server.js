@@ -23,13 +23,18 @@ app.get('/api/articles', async (req, res) => {
                 .map(async file => {
                     const content = await fs.readFile(path.join(ARTICLES_DIR, file), 'utf-8');
                     const lines = content.split('\n');
-                    const title = lines[0].replace('#', '').trim();
-                    const date = file.split('_')[0]; // 假设文件名格式为: YYYY-MM-DD_title.md
+                    const titleLine = lines.find(line => line.trim().startsWith('#') && line.trim().length > 1);
+const rawTitle = file.replace(/^\d{4}-\d{2}-\d{2}-/i, '').replace(/\.md$/, '');
+const title = rawTitle;
+                    const dateMatch = file.match(/^(\d{4}-\d{2}-\d{2})[-_]/i);
+const date = dateMatch ? 
+    `${dateMatch[0].substring(0,4)}-${dateMatch[0].substring(5,7)}-${dateMatch[0].substring(8,10)}` : 
+    new Date().toISOString().split('T')[0]; // 增强日期匹配
                     return {
-                        id: file.replace('.md', ''),
+                        id: encodeURIComponent(file.replace('.md', '')), // URL规范化处理
                         title,
                         date,
-                        preview: lines.slice(1).join('\n').substring(0, 200) + '...'
+                        preview: content.replace(/[^\u4e00-\u9fff]/g, '').substring(0, 200) + '...'
                     };
                 })
         );

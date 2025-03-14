@@ -110,9 +110,9 @@ async function loadArticles() {
         
         articleList.innerHTML = articles.map(article => `
             <article class="post-card" data-id="${article.id}">
-                <h3>${article.title}</h3>
+                <h3>${article.title.replace(/<[^>]*>?/gm, '')}</h3>
                 <time>${article.date}</time>
-                <p>${article.preview}</p>
+                <p>${article.preview.replace(/<[^>]*>?/gm, '')}</p>
             </article>
         `).join('');
 
