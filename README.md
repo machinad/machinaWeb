@@ -17,6 +17,9 @@
 - 页面内容平滑切换
 - 背景图片视差效果
 - 自适应布局设计
+- RESTful API 接口服务
+- Markdown文章动态解析
+- 文章列表自动生成机制
 
 ## 项目结构
 
@@ -50,22 +53,57 @@
 - 悬停动画效果
 - 响应式布局适配
 
+## 技术文档
+
+### API接口说明
+- `GET /api/articles` 获取文章列表
+  - 返回格式：JSON数组
+  - 字段说明：id, title, date, preview
+
+- `GET /api/articles/:id` 获取单篇文章
+  - 参数：文章ID
+  - 返回格式：HTML格式的Markdown解析内容
+
+### 文章列表生成机制
+1. 自动扫描articles目录下.md文件
+2. 解析文件名获取日期（格式：YYYY-MM-DD-标题）
+3. 提取文章前200字作为预览
+4. 支持中文字符过滤处理
+
 ## 开发指南
 
 1. 克隆项目到本地
 ```bash
 git clone https://github.com/你的用户名/machinaWeb.git
+cd machinaWeb
+npm install
 ```
 
-2. 直接打开 index.html 预览网站
+2. 启动开发服务器
+```bash
+node server.js
+```
+
+3. 访问接口文档
+http://localhost:4505/api/articles
+
+4. 使用返回按钮功能：
+- 在任何文章详情页点击"返回列表"按钮
+- 自动保持当前分类筛选状态
 
 ## 更新日志
 
-### 2024-03-03
+### 2025-02-24
 - 优化了菜单按钮动画效果
 - 添加了logo移动动画
 - 更新了侧边栏背景样式
 - 优化了移动端适配
+
+### 2025-03-14
+- 新增RESTful API接口文档
+- 实现Markdown文章自动解析
+- 增加返回列表按钮功能
+- 完善开发环境配置说明
 
 ## 贡献指南
 
