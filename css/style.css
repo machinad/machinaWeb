@@ -71,6 +71,61 @@ body {
     position: relative;
 }
 
+/* Teamspeak教程卡片样式 */
+.tutorial-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tutorial-card h2, .tutorial-card h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.tutorial-card p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.tutorial-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.download-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.download-link {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 6px 10px;
+    text-decoration: none;
+    color: #007bff;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.download-link:hover {
+    background-color: #e9ecef;
+    transform: translateY(-1px);
+}
+
 /* 内容区域蒙版 */
 .main-content::before {
     content: '';
